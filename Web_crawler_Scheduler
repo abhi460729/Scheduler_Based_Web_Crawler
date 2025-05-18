@@ -1,0 +1,41 @@
+Below is a list of GitHub repositories that include scheduler code to deploy web crawlers on a daily basis. These repositories either use scheduling mechanisms like GitHub Actions with cron syntax or other tools to automate daily web crawling tasks. Each entry includes a brief description and a link to the repository.
+
+1. **alaakh42/Newspaper-Articles-Daily-Crawler**  
+   - **Description**: A Scrapy-based web crawler designed to crawl article links from newspaper websites (primarily Arabic) on a daily basis. It uses multiple Scrapy spiders to scrape non-RSS websites concurrently, leveraging Python libraries like `newspaper3k`, `python-goose`, and `BeautifulSoup4`. The repository mentions daily crawling but does not explicitly detail the scheduling mechanism; however, Scrapy can be paired with cron jobs or external schedulers for daily execution.  
+   - **Link**: https://github.com/alaakh42/Newspaper-Articles-Daily-Crawler  [](https://github.com/alaakh42/Newspaper-Articles-Daily-Crawler)
+   - **Note**: The repository focuses on daily crawling but requires integration with a scheduler like cron or APScheduler for automation.
+
+2. **WHYjun/job-search-bot**  
+   - **Description**: A Scrapy-based Python web crawler that notifies users of up-to-date job postings daily. It uses MongoDB for storage and can be configured to run daily via external scheduling tools like cron or APScheduler. The repository includes a `requirements.txt` for dependencies and instructions for setting up the crawler, which can be automated for daily execution.  
+   - **Link**: https://github.com/WHYjun/job-search-bot  [](https://github.com/WHYjun/job-search-bot)
+   - **Note**: Scheduling is not explicitly implemented in the code but can be achieved by wrapping the crawler in a cron job or similar scheduler.
+
+3. **gt-scheduler/crawler**  
+   - **Description**: A TypeScript-based web crawler for the GT Scheduler application, which downloads course data from Georgia Tech’s Oscar system. It uses GitHub Actions to run the crawler every 30 minutes, but the schedule can be modified to run daily using cron syntax (e.g., `0 0 * * *` for midnight UTC). The workflow publishes JSON data to a `gh-pages` branch.  
+   - **Link**: https://github.com/gt-scheduler/crawler  [](https://github.com/gt-scheduler/crawler)
+   - **Example Cron**: Modify the `.github/workflows` YAML file to use `cron: '0 0 * * *'` for daily execution.
+
+4. **gt-scheduler/crawler-v2**  
+   - **Description**: An updated version of the GT Scheduler crawler, also written in TypeScript and using Node.js. Like the original, it runs every 30 minutes via GitHub Actions but can be configured for daily runs by adjusting the cron schedule in the workflow file. It processes course data and publishes JSON outputs.  
+   - **Link**: https://github.com/gt-scheduler/crawler-v2  [](https://github.com/gt-scheduler/crawler-v2)
+   - **Example Cron**: Update the GitHub Actions workflow YAML to `cron: '0 0 * * *'` for daily crawling.
+
+5. **yasoob/web-scraping-github-actions** (from Yasoob Khalid’s tutorial)  
+   - **Description**: This is not a direct repository but is referenced in a tutorial by Yasoob Khalid on using GitHub Actions to schedule a Python web scraper. The scraper downloads a webpage, extracts data using Pandas, and sends an email. The tutorial demonstrates scheduling with GitHub Actions using cron syntax (e.g., `0 0 * * *` for daily runs). You can replicate this setup by following the tutorial and hosting the code in a GitHub repository.  
+   - **Link**: No direct repository, but the tutorial is available at https://yasoob.me/posts/how-to-web-scrape-on-schedule-using-github-actions/  [](https://yasoob.me/posts/github-actions-web-scraper-schedule-tutorial/)
+   - **Example Cron**: The tutorial uses a cron schedule like `0 0 * * *` in the `.github/workflows` YAML file.
+
+### Notes:
+- **GitHub Actions**: Repositories like `gt-scheduler/crawler` and `gt-scheduler/crawler-v2` use GitHub Actions with cron schedules, which is a common way to automate daily tasks. You can modify the cron expression in the workflow YAML file to `0 0 * * *` for daily execution at midnight UTC.[](https://jasonet.co/posts/scheduled-actions/)[](https://lost-stats.github.io/Other/task_scheduling_with_github_actions.html)
+- **Other Schedulers**: For repositories like `alaakh42/Newspaper-Articles-Daily-Crawler` and `WHYjun/job-search-bot`, you can implement daily scheduling using external tools like cron (on a server) or Python libraries like APScheduler. For example, APScheduler can be added to run the crawler daily with code like:
+  ```python
+  from apscheduler.schedulers.blocking import BlockingScheduler
+  scheduler = BlockingScheduler()
+  scheduler.add_job(run_crawler, 'cron', hour=0, minute=0)  # Runs daily at midnight
+  scheduler.start()
+  ```
+- **Limitations**: Some repositories assume the user will set up the scheduling mechanism externally. If you need a specific implementation, you may need to add a GitHub Actions workflow or cron job yourself.
+- **Cron Syntax**: For daily scheduling in GitHub Actions, use `cron: '0 0 * * *'` in the workflow YAML file to run at midnight UTC. Use tools like [crontab.guru](https://crontab.guru/) to customize schedules.[](https://jasonet.co/posts/scheduled-actions/)
+
+If you need help setting up a specific repository or writing a GitHub Actions workflow for daily crawling, let me know, and I can provide a sample YAML file or further guidance!
+
